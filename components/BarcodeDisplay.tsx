@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 
 // TypeScript declaration for JsBarcode loaded from CDN
@@ -14,9 +13,12 @@ interface BarcodeDisplayProps {
   width: number;
   height: number;
   showText: boolean;
+  fontFamily: string;
+  fontSize: number;
+  fontColor: string;
 }
 
-const BarcodeDisplay: React.FC<BarcodeDisplayProps> = ({ value, text, width, height, showText }) => {
+const BarcodeDisplay: React.FC<BarcodeDisplayProps> = ({ value, text, width, height, showText, fontFamily, fontSize, fontColor }) => {
   const barcodeRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
@@ -33,7 +35,6 @@ const BarcodeDisplay: React.FC<BarcodeDisplayProps> = ({ value, text, width, hei
             height: height,
             displayValue: false, // We render our own text for better styling
             margin: 0,
-            font: "monospace",
           });
         } catch (e) {
           // If JsBarcode throws an error, display an invalid message inside the SVG
@@ -56,8 +57,13 @@ const BarcodeDisplay: React.FC<BarcodeDisplayProps> = ({ value, text, width, hei
       <svg ref={barcodeRef} className="w-full"></svg>
       {showText && text && (
          <p 
-            className="mt-2 text-center font-mono tracking-widest text-lg sm:text-xl"
-            style={{ letterSpacing: '0.2em' }} // Wider letter spacing for clarity
+            className="mt-2 text-center tracking-widest"
+            style={{ 
+              letterSpacing: '0.2em', // Wider letter spacing for clarity
+              fontFamily: fontFamily,
+              fontSize: `${fontSize}px`,
+              color: fontColor,
+            }}
         >
             {text}
         </p>
